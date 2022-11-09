@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { User } from './auth-form/models/auth-form.interface';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'angular-pro';
+
+  rememberMe: boolean = false;
+  createUser(user: User){
+    console.log('Create account', user);
+  }
+
+  loginUser(user: User){
+    console.log('Login', user);
+    console.log('Remember me', this.rememberMe);
+  }
+
+  rememberUser(value: boolean){
+    this.rememberMe = value;
+  }
 }
