@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -11,6 +12,7 @@ import { AuthFormModule } from './auth-form/auth-form.module';
   imports: [
     //Angular Modules
     BrowserModule,
+    CommonModule,
     //Custom Modules
     AuthFormModule
   ],
