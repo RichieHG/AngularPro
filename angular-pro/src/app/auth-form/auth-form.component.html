@@ -1,6 +1,6 @@
 <div>
   <form (ngSubmit)="onSubmit(form.value)" #form="ngForm">
-    <ng-content select="#title"></ng-content>
+    <h3>{{title}}</h3>
     <label>
       Email address
       <input type="email" name="email" ngModel #email>
@@ -13,6 +13,8 @@
     <auth-message [style.display]="(showMessage ? 'inherit' : 'none')"></auth-message>
     <!-- <auth-message [style.display]="(showMessage ? 'inherit' : 'none')"></auth-message>
     <auth-message [style.display]="(showMessage ? 'inherit' : 'none')"></auth-message> -->
-    <ng-content select="[submitButton]"></ng-content>
+    <button type="submit">
+      {{title}}
+    </button>
   </form>
 </div>

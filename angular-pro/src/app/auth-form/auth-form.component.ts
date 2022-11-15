@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, ContentChild, AfterContentInit, ContentChildren, QueryList, AfterViewInit, ViewChild, ViewChildren, ChangeDetectorRef, ElementRef } from "@angular/core";
+import { Component, EventEmitter, Output, ContentChild, AfterContentInit, ContentChildren, QueryList, AfterViewInit, ViewChild, ViewChildren, ChangeDetectorRef, ElementRef, Renderer2 } from "@angular/core";
 import { User } from "./models/auth-form.interface";
 import { AuthRememberComponent } from "./components/auth-remember.component";
 import { AuthMessageComponent } from "./components/auth-message.component";
@@ -14,6 +14,7 @@ import { AuthMessageComponent } from "./components/auth-message.component";
 
 export class AuthFormComponent implements AfterContentInit, AfterViewInit {
 
+  title: string = 'Login';
   showMessage: boolean = false;
 
   @ContentChild(AuthRememberComponent)
@@ -34,7 +35,8 @@ export class AuthFormComponent implements AfterContentInit, AfterViewInit {
   @Output()
   submitted: EventEmitter<User> = new EventEmitter();
   constructor(
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private renderer : Renderer2
   ) { }
 
   ngAfterContentInit() {
@@ -54,9 +56,13 @@ export class AuthFormComponent implements AfterContentInit, AfterViewInit {
       //   this.message!.forEach((item: AuthMessageComponent) => item.days = 30)
       // });
     }
-    this.email?.nativeElement.setAttribute('placeholder', 'Enter your email address');
-    this.email?.nativeElement.classList.add('email');
-    this.email?.nativeElement.focus();
+    // this.email?.nativeElement.setAttribute('placeholder', 'Enter your email address');
+    // this.email?.nativeElement.classList.add('email');
+    // this.email?.nativeElement.focus();
+
+    this.renderer.setAttribute(this.email?.nativeElement,'placeholder', 'Enter your email address');
+    this.renderer.addClass(this.email?.nativeElement, 'email');
+    this.renderer.selectRootElement(this.email?.nativeElement).focus();
 
     this.cd.detectChanges();
   }

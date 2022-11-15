@@ -5,13 +5,19 @@
       Join us
     </button>
   </auth-form> -->
-  <auth-form (submitted)="loginUser($event)">
+  <!-- <auth-form (submitted)="loginUser($event)">
     <h3 id="title">Login</h3>
     <auth-remember rememberMe (checked)="rememberUser($event)"></auth-remember>
-    <!-- <auth-remember rememberMe (checked)="rememberUser($event)"></auth-remember>
-    <auth-remember rememberMe (checked)="rememberUser($event)"></auth-remember> -->
+    <auth-remember rememberMe (checked)="rememberUser($event)"></auth-remember>
+    <auth-remember rememberMe (checked)="rememberUser($event)"></auth-remember>
     <button type="submit" submitButton>
       Login
     </button>
-  </auth-form>
+  </auth-form> -->
+  <div>
+  <button (click)="destroyComponent()">Destroy</button>
+  <button (click)="moveComponent()">Move</button>
+
+  </div>
+  <div #entry></div>
 </div>
