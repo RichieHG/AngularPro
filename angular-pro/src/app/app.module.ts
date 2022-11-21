@@ -4,8 +4,11 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { AuthFormModule } from './auth-form/auth-form.module';
+import { CreditCardDirective } from './credit-card/credit-card.directive';
+import { MyForDirective } from './myFor/my-for.directive';
 import { OneComponent } from './one/one.component';
 import { ThreeComponent } from './three/three.component';
+import { TooltipDirective } from './tooltip/tooltip.directive';
 import { TwoComponent } from './two/two.component';
 
 @NgModule({
@@ -13,7 +16,10 @@ import { TwoComponent } from './two/two.component';
     AppComponent,
     OneComponent,
     TwoComponent,
-    ThreeComponent
+    ThreeComponent,
+    CreditCardDirective,
+    TooltipDirective,
+    MyForDirective
 
   ],
   imports: [
