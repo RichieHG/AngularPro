@@ -1,6 +1,8 @@
-import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentRef, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentRef, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { AuthFormComponent } from './auth-form/auth-form.component';
 import { User } from './auth-form/models/auth-form.interface';
+import { File } from './interfaces';
+import { FileSizePipe } from './pipes/filesize.pipe';
 
 @Component({
   selector: 'app-root',
@@ -25,7 +27,7 @@ import { User } from './auth-form/models/auth-form.interface';
         <input type="text">
       </label> -->
 
-      <ul>
+      <!-- <ul>
         <li *myFor="let item of items; let i = index;">
           {{ i }} Member: {{ item.name | json }}
         </li>
@@ -34,12 +36,19 @@ import { User } from './auth-form/models/auth-form.interface';
             {{ i }} Member: {{ item.name | json }}
           </li>
         </ng-template>
-      </ul>
+      </ul>-->
+      <div *ngFor="let file of mapped">
+        <p> {{file.name}}</p>
+        <p> {{file.size}}</p>
+      </div>
     </div>
   `,
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  providers: [
+    FileSizePipe
+  ]
 })
-export class AppComponent implements AfterViewInit{
+export class AppComponent implements AfterViewInit, OnInit{
 
   rememberMe: boolean = false;
 
@@ -56,6 +65,8 @@ export class AppComponent implements AfterViewInit{
     location: 'California'
   };
 
+  files : File[] = []
+  mapped : File[] = []
   ctx = {
     location: 'CDMX, MX',
     $implicit: 'Richie HG'
@@ -75,7 +86,8 @@ export class AppComponent implements AfterViewInit{
     location: 'California'
   }];
   constructor(
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private fileSizePipe: FileSizePipe
   ){
       setTimeout(() => {
           this.items = [...this.items,{
@@ -84,6 +96,34 @@ export class AppComponent implements AfterViewInit{
             name: 'Neftali'
           }]
       }, 2000);
+  }
+
+  ngOnInit(): void {
+      this.files = [
+        {
+          name: 'logo.svg',
+          size: 2120109,
+          type: 'image/svg'
+        },
+        {
+          name: 'banner.jpg',
+          size: 18029,
+          type: 'image/jpg'
+        },
+        {
+          name: 'background.png',
+          size: 1784562,
+          type: 'image/png'
+        }
+      ];
+
+      this.mapped = this.files.map(file => {
+        return {
+          name: file.name,
+          type: file.type,
+          size: this.fileSizePipe.transform(file.size, 'mb')
+        }
+      })
   }
 
   ngAfterViewInit() {

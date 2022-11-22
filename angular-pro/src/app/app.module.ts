@@ -7,6 +7,7 @@ import { AuthFormModule } from './auth-form/auth-form.module';
 import { CreditCardDirective } from './credit-card/credit-card.directive';
 import { MyForDirective } from './myFor/my-for.directive';
 import { OneComponent } from './one/one.component';
+import { FileSizePipe } from './pipes/filesize.pipe';
 import { ThreeComponent } from './three/three.component';
 import { TooltipDirective } from './tooltip/tooltip.directive';
 import { TwoComponent } from './two/two.component';
@@ -19,7 +20,8 @@ import { TwoComponent } from './two/two.component';
     ThreeComponent,
     CreditCardDirective,
     TooltipDirective,
-    MyForDirective
+    MyForDirective,
+    FileSizePipe
 
   ],
   imports: [
