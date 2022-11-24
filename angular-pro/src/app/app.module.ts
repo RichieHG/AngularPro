@@ -8,7 +8,7 @@ import { CreditCardDirective } from './credit-card/credit-card.directive';
 import { MyForDirective } from './myFor/my-for.directive';
 import { OneComponent } from './one/one.component';
 import { FileSizePipe } from './pipes/filesize.pipe';
-import { StockInventoryModule } from './stock-inventory/containers/stock-inventory.module';
+import { StockInventoryModule } from './stock-inventory/stock-inventory.module';
 import { ThreeComponent } from './three/three.component';
 import { TooltipDirective } from './tooltip/tooltip.directive';
 import { TwoComponent } from './two/two.component';
