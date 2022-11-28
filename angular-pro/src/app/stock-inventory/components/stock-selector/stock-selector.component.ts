@@ -14,7 +14,10 @@ import { Product } from '../../models/product.interface';
       </select>
       <!-- <input type="number" step="10" min="10" max="1000" placeholder="Quantity" formControlName="quantity"> -->
       <stock-counter [step]="10" [min]="10" [max]="1000" formControlName="quantity"></stock-counter>
-      <button type="button" (click)="onAdd()"> Add stock</button>
+      <button type="button" (click)="onAdd()" [disabled]="stockExists || notSelected"> Add stock</button>
+      <div class="stock-selector__error" *ngIf="stockExists">
+        Item already exists in the stock
+      </div>
     </div>
   </div>
   `
@@ -30,12 +33,25 @@ export class StockSelectorComponent {
 
   @Output()
   added : EventEmitter<any> = new EventEmitter<any>();
+
+  get stockExists(){
+    return (
+      this.parent.hasError('stockExists') &&
+      this.parent.get('selector.product_id')?.dirty
+    );
+  }
+
+  get notSelected(){
+    return !this.parent.get('selector.product_id')?.value;
+  }
   onAdd(){
     this.added.emit(this.parent?.get('selector')?.value);
     this.parent.get('selector')?.reset({
       product_id: '',
       quantity: 10
     });
+
+
     // this.parent.get('selector')?.patchValue({
     //   product_id: ''
     // }); //Only update value doesnt interact DOM

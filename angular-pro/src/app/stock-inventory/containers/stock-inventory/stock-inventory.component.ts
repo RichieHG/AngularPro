@@ -1,9 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { FormControl, FormGroup, FormArray, FormBuilder } from "@angular/forms";
-import { forkJoin } from "rxjs";
+import { FormControl, FormGroup, FormArray, FormBuilder, Validators, AbstractControl } from "@angular/forms";
+import { forkJoin, map } from "rxjs";
 import { Item } from "../../models/item.interface";
 import { Product } from "../../models/product.interface";
 import { StockInventoryService } from "../../services/stock-inventory.service";
+import { StockValidators } from "./stock-inventory.validators";
 
 @Component({
   selector: 'stock-inventory',
@@ -77,16 +78,30 @@ export class StockInventoryComponent implements OnInit {
 
   total?: number;
   form = this.fb.group({
-    store: this.fb.group({
-      branch: '',
-      code: ''
-    }),
-    selector: this.createStock({}),
-    stock: this.fb.array([
-      // this.createStock({ product_id: 1, quantity: 10 }),
-      // this.createStock({ product_id: 3, quantity: 50 }),
-    ])
-  });
+      store: this.fb.group({
+        branch: ['',
+          [
+            Validators.required,
+            StockValidators.checkBranch,
+          ],
+          [
+            this.validateBranch.bind(this)
+          ]
+        ],
+        code: ['', Validators.required]
+      }),
+      selector: this.createStock({}),
+      stock: this.fb.array([
+        // this.createStock({ product_id: 1, quantity: 10 }),
+        // this.createStock({ product_id: 3, quantity: 50 }),
+      ])
+    },
+    {
+      validators: [
+        StockValidators.checkStockExists
+      ]
+    }
+  );
   constructor(
     private fb: FormBuilder,
     private stockService: StockInventoryService
@@ -132,5 +147,12 @@ export class StockInventoryComponent implements OnInit {
       return prev + (next.quantity * this.productMap?.get(next.product_id)?.price!)
     }, 0)
     this.total = total;
+  }
+
+  validateBranch(control: AbstractControl){
+    return this.stockService.checkBranchID(control.value)
+            .pipe(
+              map((response: boolean) => response ? null : {unknownBranch: true})
+            );
   }
 }
