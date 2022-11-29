@@ -22,4 +22,13 @@ export class MailService{
       )
     );
   }
+
+  getMessage(id: string): Observable<Mail>{
+    return(
+      this.http.get<Mail>(`${MESSAGES_URL}/${id}`)
+      .pipe(
+        map((response: Mail) => response)
+      )
+    );
+  }
 }
