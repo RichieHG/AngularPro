@@ -1,4 +1,6 @@
 import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentRef, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
 import { AuthFormComponent } from './auth-form/auth-form.component';
 import { User } from './auth-form/models/auth-form.interface';
 import { File } from './interfaces';
@@ -9,7 +11,7 @@ import { FileSizePipe } from './pipes/filesize.pipe';
   // templateUrl: './app.component.html',
   changeDetection:ChangeDetectionStrategy.Default,
   template: `
-    <div>
+    <!-- <div> -->
       <!-- <button (click)="addProp()">Add property</button>
       <button (click)="changeUser()">Change user object</button>
       <button (click)="changeName()">Change name property</button>
@@ -41,7 +43,27 @@ import { FileSizePipe } from './pipes/filesize.pipe';
         <p> {{file.name}}</p>
         <p> {{file.size}}</p>
       </div> -->
-      <stock-inventory></stock-inventory>
+      <!-- <stock-inventory></stock-inventory> -->
+    <!-- </div> -->
+    <div class="app">
+      <header>
+        <img src="assets/logo.svg">
+      </header>
+      <div class="app__content">
+        <nav>
+          <a
+            [routerLink]="[{outlets: {primary: 'folder/inbox', pane: null}}]"
+            routerLinkActive="active">
+            Inbox
+          </a>
+          <a
+            [routerLink]="[{outlets: {primary: 'folder/trash', pane: null}}]"
+            routerLinkActive="active">
+            Trash
+          </a>
+        </nav>
+        <mail-app></mail-app>
+      </div>
     </div>
   `,
   styleUrls: ['./app.component.scss'],
@@ -49,7 +71,22 @@ import { FileSizePipe } from './pipes/filesize.pipe';
     FileSizePipe
   ]
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
+
+  constructor(
+    private router: Router
+  ){
+
+  }
+  ngOnInit() {
+      this.router.events
+      .pipe(
+        filter((event: any) => event instanceof NavigationEnd)
+      )
+      .subscribe((event: any) => {
+        console.log(event);
+      })
+  }
   //implements AfterViewInit, OnInit{
 
   // rememberMe: boolean = false;
