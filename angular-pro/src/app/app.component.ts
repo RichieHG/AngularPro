@@ -4,7 +4,7 @@ import { filter } from 'rxjs';
 import { AuthFormComponent } from './auth-form/auth-form.component';
 import { User } from './auth-form/models/auth-form.interface';
 import { File } from './interfaces';
-import { FileSizePipe } from './pipes/filesize.pipe';
+import { FileSizePipe } from './pipes/file-size/file-size.pipe';
 
 @Component({
   selector: 'app-root',

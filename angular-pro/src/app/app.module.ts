@@ -12,7 +12,7 @@ import { CreditCardDirective } from './credit-card/credit-card.directive';
 import { MailModule } from './mail/mail.module';
 import { MyForDirective } from './myFor/my-for.directive';
 import { OneComponent } from './one/one.component';
-import { FileSizePipe } from './pipes/filesize.pipe';
+import { FileSizePipe } from './pipes/file-size/file-size.pipe';
 import { StockInventoryModule } from './stock-inventory/stock-inventory.module';
 import { ThreeComponent } from './three/three.component';
 import { TooltipDirective } from './tooltip/tooltip.directive';
