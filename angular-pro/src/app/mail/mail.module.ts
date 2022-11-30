@@ -10,22 +10,34 @@ import { MailService } from './mail.service';
 import { MailFolderResolve } from './containers/mail-folder/mail-folder.resolve';
 import { MailViewComponent } from './components/mail-view/mail-view.component';
 import { MailViewResolve } from './components/mail-view/mail-view.resolve';
+import { AuthModule } from '../auth/auth.module';
+import { AuthGuard } from '../auth/auth.guard';
+import { MailViewGuard } from './components/mail-view/mail-view.guard';
 
 export const ROUTES: Routes = [
   {
-    path: 'folder/:name',
-    component: MailFolderComponent,
-    resolve:{
-      messages: MailFolderResolve
-    }
-  },
-  {
-    path:'message/:id',
-    component: MailViewComponent,
-    outlet: 'pane',
-    resolve: {
-      message: MailViewResolve
-    }
+    path: 'mail',
+    component: MailAppComponent,
+    canActivate:[AuthGuard],
+    canActivateChild: [AuthGuard],
+    children:[
+      {
+        path: 'folder/:name',
+        component: MailFolderComponent,
+        resolve:{
+          messages: MailFolderResolve
+        }
+      },
+      {
+        path:'message/:id',
+        component: MailViewComponent,
+        canDeactivate: [MailViewGuard],
+        outlet: 'pane',
+        resolve: {
+          message: MailViewResolve
+        }
+      }
+    ]
   }
 ];
 
@@ -33,7 +45,8 @@ export const ROUTES: Routes = [
   imports: [
     CommonModule,
     HttpClientModule,
-    RouterModule.forChild(ROUTES)
+    RouterModule.forChild(ROUTES),
+    AuthModule
   ],
   declarations: [
     MailFolderComponent,
@@ -47,7 +60,8 @@ export const ROUTES: Routes = [
   providers:[
     MailService,
     MailFolderResolve,
-    MailViewResolve
+    MailViewResolve,
+    MailViewGuard
   ]
 })
 export class MailModule {}

@@ -1,10 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, PreloadingStrategy, Route } from '@angular/router';
+import { Observable, of } from 'rxjs';
 
 import { AppComponent } from './app.component';
 import { AuthFormModule } from './auth-form/auth-form.module';
+import { AuthGuard } from './auth/auth.guard';
+import { AuthModule } from './auth/auth.module';
 import { CreditCardDirective } from './credit-card/credit-card.directive';
 import { MailModule } from './mail/mail.module';
 import { MyForDirective } from './myFor/my-for.directive';
@@ -15,8 +18,24 @@ import { ThreeComponent } from './three/three.component';
 import { TooltipDirective } from './tooltip/tooltip.directive';
 import { TwoComponent } from './two/two.component';
 
+export class CustomPreload implements PreloadingStrategy{
+  preload(route: Route, fn: () => Observable<any>): Observable<any> {
+    return route.data && route.data['preload'] ? fn() :  of(null)
+  }
+}
 export const ROUTES: Routes = [
-  { path: '**', redirectTo: 'folder/inbox' }
+  {
+    path: 'dashboard',
+    data:{
+      preload: true
+    },
+    canLoad: [AuthGuard],
+    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+  },
+  {
+    path: '**',
+    redirectTo: 'mail/folder/inbox'
+  }
 ];
 
 @NgModule({
@@ -35,13 +54,16 @@ export const ROUTES: Routes = [
     //Angular Modules
     BrowserModule,
     CommonModule,
-    RouterModule.forRoot(ROUTES),
+    RouterModule.forRoot(ROUTES, { preloadingStrategy:  CustomPreload}),
     //Custom Modules
     AuthFormModule,
     StockInventoryModule,
-    MailModule
+    MailModule,
+    AuthModule
   ],
-  providers: [],
+  providers: [
+    CustomPreload
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

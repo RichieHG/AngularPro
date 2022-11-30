@@ -8,7 +8,7 @@ import { Mail } from '../../models/mail.interface';
   styleUrls: ['mail-item.component.scss'],
   template: `
     <a class="mail-item"
-    [routerLink]="['',{outlets: {pane: ['message', message?.id]}}]"
+    [routerLink]="['/mail',{outlets: {pane: ['message', message?.id]}}]"
     routerLinkActive="active">
     <!-- <a class="mail-item"
     (click)="navigateToMessage()"> -->
@@ -31,7 +31,7 @@ export class MailItemComponent {
   }
   navigateToMessage(){
     this.router.navigate(
-      ['',{outlets: {pane: ['message', this.message?.id]}}]
+      ['/mail',{outlets: {pane: ['message', this.message?.id]}}]
     )
   }
 }
