@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 const COUNTER_CONTROL_ACCESOR = {
@@ -15,9 +15,7 @@ const COUNTER_CONTROL_ACCESOR = {
   <div class="stock-counter" [class.focused]="focus">
     <div>
       <div tabindex="0" (keydown)="onKeyDown($event)" (blur)="onBlur($event)" (focus)="onFocus($event)">
-        <p>
-          {{value}}
-        </p>
+        <p>{{value}}</p>
         <div>
           <button type="button" (click)="increment()" [disabled]="value == max">
             +
@@ -36,6 +34,8 @@ export class StockCounterComponent implements ControlValueAccessor {
 
   private onTouch? : Function;
   private onModelChange? : Function;
+
+    @Output() changed = new EventEmitter<number>();
 
   registerOnTouched(fn: any) {
     this.onTouch = fn;
@@ -61,17 +61,21 @@ export class StockCounterComponent implements ControlValueAccessor {
   increment(){
     if(this.value < this.max){
       this.value = this.value + this.step;
-      this.onModelChange!(this.value);
+      // this.onModelChange!(this.value);
+      this.changed.emit(this.value);
+
     }
-    this.onTouch!();
+    // this.onTouch!();
   }
 
   decrement(){
     if(this.value > this.min){
       this.value = this.value - this.step;
-      this.onModelChange!(this.value);
+      // this.onModelChange!(this.value);
+      this.changed.emit(this.value);
+
     }
-    this.onTouch!();
+    // this.onTouch!();
   }
 
   onKeyDown(event: KeyboardEvent){
@@ -84,14 +88,14 @@ export class StockCounterComponent implements ControlValueAccessor {
       event.preventDefault();
       event.stopPropagation();
     }
-    this.onTouch!();
+    // this.onTouch!();
   }
 
   onBlur(event: FocusEvent){
     this.focus = false;
     event.preventDefault();
     event.stopPropagation();
-    this.onTouch!();
+    // this.onTouch!();
   }
 
   onFocus(event: FocusEvent){
