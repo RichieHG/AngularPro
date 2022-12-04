@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes, PreloadingStrategy, Route } from '@angular/router';
@@ -8,13 +9,19 @@ import { AppComponent } from './app.component';
 import { AuthFormModule } from './auth-form/auth-form.module';
 import { AuthGuard } from './auth/auth.guard';
 import { AuthModule } from './auth/auth.module';
+import { DrinkViewerComponent } from './containers/drink-viewer.component';
+import { PizzaViewerComponent } from './containers/pizza-viewer.component';
+import { SideViewerComponent } from './containers/side-viewer.component';
 import { CreditCardDirective } from './credit-card/credit-card.directive';
+import { FoodStoreModule } from './food-store/food-store.module';
+import { FoodService } from './food.service';
 import { MailModule } from './mail/mail.module';
 import { MyForDirective } from './myFor/my-for.directive';
 import { OneComponent } from './one/one.component';
 import { FileSizePipe } from './pipes/file-size/file-size.pipe';
 import { StockInventoryModule } from './stock-inventory/stock-inventory.module';
 import { ThreeComponent } from './three/three.component';
+import { API_TOKEN } from './token';
 import { TooltipDirective } from './tooltip/tooltip.directive';
 import { TwoComponent } from './two/two.component';
 
@@ -47,7 +54,10 @@ export const ROUTES: Routes = [
     CreditCardDirective,
     TooltipDirective,
     MyForDirective,
-    FileSizePipe
+    FileSizePipe,
+    DrinkViewerComponent,
+    PizzaViewerComponent,
+    SideViewerComponent
 
   ],
   imports: [
@@ -55,14 +65,20 @@ export const ROUTES: Routes = [
     BrowserModule,
     CommonModule,
     RouterModule.forRoot(ROUTES, { preloadingStrategy:  CustomPreload}),
+    HttpClientModule,
     //Custom Modules
     AuthFormModule,
     StockInventoryModule,
     MailModule,
-    AuthModule
+    AuthModule,
+    FoodStoreModule.forRoot({
+      storeId: 10292,
+      storeToken: 'eca938c99a0e9ff91029dc'
+    })
   ],
   providers: [
-    CustomPreload
+    CustomPreload,
+    {provide: API_TOKEN, useValue: 'http://localhost:3000' }
   ],
   bootstrap: [AppComponent]
 })
