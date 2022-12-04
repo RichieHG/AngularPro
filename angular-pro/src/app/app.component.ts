@@ -1,15 +1,16 @@
-import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentRef, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentRef, DoCheck, NgZone, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { AuthFormComponent } from './auth-form/auth-form.component';
 import { User } from './auth-form/models/auth-form.interface';
+import { FoodStoreService } from './food-store/food-store.service';
 import { File } from './interfaces';
 import { FileSizePipe } from './pipes/file-size/file-size.pipe';
 
 @Component({
   selector: 'app-root',
   // templateUrl: './app.component.html',
-  changeDetection:ChangeDetectionStrategy.Default,
+  // changeDetection:ChangeDetectionStrategy.Default,
   template: `
     <!-- <div> -->
       <!-- <button (click)="addProp()">Add property</button>
@@ -45,7 +46,7 @@ import { FileSizePipe } from './pipes/file-size/file-size.pipe';
       </div> -->
       <!-- <stock-inventory></stock-inventory> -->
     <!-- </div> -->
-    <div class="app">
+    <!-- <div class="app">
       <header>
         <img src="assets/logo.svg">
       </header>
@@ -69,29 +70,70 @@ import { FileSizePipe } from './pipes/file-size/file-size.pipe';
         </nav>
         <router-outlet></router-outlet>
       </div>
+    </div> -->
+    <!-- <div>
+      <pizza-viewer></pizza-viewer>
+      <side-viewer></side-viewer>
+      <drink-viewer></drink-viewer>
+    </div> -->
+    <!-- <div>
+      Food Store ({{ (store | async)?.name }})
+    </div> -->
+    <div>
+      Counter: {{counter}}
     </div>
   `,
-  styleUrls: ['./app.component.scss'],
+  // styleUrls: ['./app.component.scss'],
+  styles: [`
+    pizza-viewer,
+    side-viewer,
+    drink-viewer {
+      display: block;
+      border-bottom: 2px solid #eee;
+      padding: 20px 0;
+    }
+  `],
   providers: [
     FileSizePipe
   ]
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit, DoCheck{
 
+  counter: number = 0;
+  // store = this.foodService.getStore();
   constructor(
-    private router: Router
+    private zone: NgZone
   ){
 
   }
-  ngOnInit() {
-      // this.router.events
-      // .pipe(
-      //   filter((event: any) => event instanceof NavigationEnd)
-      // )
-      // .subscribe((event: any) => {
-      //   console.log(event);
-      // })
+  ngOnInit(){
+    this.zone.runOutsideAngular(() => {
+       setTimeout(() => this.counter++, 1000);
+
+    });
+    this.zone.run(() => {
+      setTimeout(() => this.counter = this.counter, 2000);
+    })
+
   }
+  ngDoCheck() {
+      console.log('Change detection has been run!')
+  }
+
+  // constructor(
+  //   private router: Router
+  // ){
+
+  // }
+  // ngOnInit() {
+  //     // this.router.events
+  //     // .pipe(
+  //     //   filter((event: any) => event instanceof NavigationEnd)
+  //     // )
+  //     // .subscribe((event: any) => {
+  //     //   console.log(event);
+  //     // })
+  // }
   //implements AfterViewInit, OnInit{
 
   // rememberMe: boolean = false;
@@ -222,4 +264,5 @@ export class AppComponent implements OnInit{
   //     location: 'California'
   //   };
   // }
+
 }
