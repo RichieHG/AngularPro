@@ -19,7 +19,9 @@ import { MailModule } from './mail/mail.module';
 import { MyForDirective } from './myFor/my-for.directive';
 import { OneComponent } from './one/one.component';
 import { FileSizePipe } from './pipes/file-size/file-size.pipe';
+import { SongsModule } from './songs/songs.module';
 import { StockInventoryModule } from './stock-inventory/stock-inventory.module';
+import { Store } from './store';
 import { ThreeComponent } from './three/three.component';
 import { API_TOKEN } from './token';
 import { TooltipDirective } from './tooltip/tooltip.directive';
@@ -64,7 +66,7 @@ export const ROUTES: Routes = [
     //Angular Modules
     BrowserModule,
     CommonModule,
-    RouterModule.forRoot(ROUTES, { preloadingStrategy:  CustomPreload}),
+    // RouterModule.forRoot(ROUTES, { preloadingStrategy:  CustomPreload}),
     HttpClientModule,
     //Custom Modules
     AuthFormModule,
@@ -74,11 +76,13 @@ export const ROUTES: Routes = [
     FoodStoreModule.forRoot({
       storeId: 10292,
       storeToken: 'eca938c99a0e9ff91029dc'
-    })
+    }),
+    SongsModule
   ],
   providers: [
     CustomPreload,
-    {provide: API_TOKEN, useValue: 'http://localhost:3000' }
+    {provide: API_TOKEN, useValue: 'http://localhost:3000' },
+    Store
   ],
   bootstrap: [AppComponent]
 })

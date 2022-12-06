@@ -6,6 +6,7 @@ import { User } from './auth-form/models/auth-form.interface';
 import { FoodStoreService } from './food-store/food-store.service';
 import { File } from './interfaces';
 import { FileSizePipe } from './pipes/file-size/file-size.pipe';
+import { Store } from './store';
 
 @Component({
   selector: 'app-root',
@@ -79,46 +80,67 @@ import { FileSizePipe } from './pipes/file-size/file-size.pipe';
     <!-- <div>
       Food Store ({{ (store | async)?.name }})
     </div> -->
-    <div>
+    <!-- <div>
       Counter: {{counter}}
+    </div> -->
+
+    <div>
+      <!-- <div *ngFor="let todo of todos$ | async">
+        {{ todo.name }}
+      </div> -->
+
+      <songs-playlist></songs-playlist>
+      <songs-listened></songs-listened>
+      <songs-favourites></songs-favourites>
+
     </div>
   `,
   // styleUrls: ['./app.component.scss'],
-  styles: [`
-    pizza-viewer,
-    side-viewer,
-    drink-viewer {
-      display: block;
-      border-bottom: 2px solid #eee;
-      padding: 20px 0;
-    }
-  `],
+  // styles: [`
+  //   /* pizza-viewer,
+  //   side-viewer,
+  //   drink-viewer {
+  //     display: block;
+  //     border-bottom: 2px solid #eee;
+  //     padding: 20px 0;
+  //   } */
+  // `],
   providers: [
-    FileSizePipe
+    // FileSizePipe
   ]
 })
-export class AppComponent implements OnInit, DoCheck{
+export class AppComponent {
 
-  counter: number = 0;
-  // store = this.foodService.getStore();
+  todos$ = this.store.select<any[]>('todos');
+
   constructor(
-    private zone: NgZone
-  ){
-
+    private store: Store
+  ) {
+    this.store.set('todos', [{ id: 1, name: 'Eat dinner' }, { id: 2, name: 'Do washing' }]);
+    console.log(this.store)
   }
-  ngOnInit(){
-    this.zone.runOutsideAngular(() => {
-       setTimeout(() => this.counter++, 1000);
 
-    });
-    this.zone.run(() => {
-      setTimeout(() => this.counter = this.counter, 2000);
-    })
 
-  }
-  ngDoCheck() {
-      console.log('Change detection has been run!')
-  }
+  // counter: number = 0;
+  // // store = this.foodService.getStore();
+  // constructor(
+  //   private zone: NgZone
+  // ){
+
+  // }
+  // ngOnInit(){
+  //   this.zone.runOutsideAngular(() => {
+  //      setTimeout(() => this.counter++, 1000);
+
+  //   });
+  //   this.zone.run(() => {
+  //     setTimeout(() => this.counter = this.counter, 2000);
+  //   })
+
+  // }
+  // ngDoCheck() {
+  //     console.log('Change detection has been run!')
+  // }
 
   // constructor(
   //   private router: Router
