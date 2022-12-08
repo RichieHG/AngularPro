@@ -3,12 +3,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Route, RouterModule } from '@angular/router';
 import { Store } from 'src/store';
 import { AuthModule } from './auth/auth.module';
+import { AppHeaderComponent } from './components/app-header/app-header.component';
+import { AppNavComponent } from './components/app-nav/app-nav.component';
 import { AppComponent } from './containers/app/app.component';
 
 export const ROUTES: Route[] = [];
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AppHeaderComponent,
+    AppNavComponent
   ],
   imports: [
     BrowserModule,

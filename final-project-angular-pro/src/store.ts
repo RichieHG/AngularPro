@@ -2,7 +2,7 @@ import { BehaviorSubject, distinctUntilChanged, map, Observable } from "rxjs";
 import { User } from "./app/auth/shared/services/auth/auth.service";
 
 export interface State {
-  user: User | undefined,
+  user?: User | null ,
   [key: string]: any
 }
 
