@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { AuthService, User } from 'src/app/auth/shared/services/auth/auth.service';
+import { AuthService, User } from 'src/auth/shared/services/auth/auth.service';
 import { Store } from 'src/store';
 
 @Component({

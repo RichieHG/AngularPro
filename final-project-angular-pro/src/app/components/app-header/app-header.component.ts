@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { User } from 'src/app/auth/shared/services/auth/auth.service';
+import { User } from 'src/auth/shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-header',

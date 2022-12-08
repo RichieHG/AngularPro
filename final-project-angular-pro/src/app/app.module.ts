@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { Route, RouterModule } from '@angular/router';
+import { AuthModule } from 'src/auth/auth.module';
 import { Store } from 'src/store';
-import { AuthModule } from './auth/auth.module';
 import { AppHeaderComponent } from './components/app-header/app-header.component';
 import { AppNavComponent } from './components/app-nav/app-nav.component';
 import { AppComponent } from './containers/app/app.component';
