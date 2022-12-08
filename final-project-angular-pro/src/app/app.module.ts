@@ -5,7 +5,6 @@ import { Store } from 'src/store';
 import { AuthModule } from './auth/auth.module';
 import { AppComponent } from './containers/app/app.component';
 
-
 export const ROUTES: Route[] = [];
 @NgModule({
   declarations: [
@@ -15,6 +14,7 @@ export const ROUTES: Route[] = [];
     BrowserModule,
     RouterModule.forRoot(ROUTES),
     AuthModule
+
   ],
   providers: [
     Store
@@ -22,3 +22,7 @@ export const ROUTES: Route[] = [];
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+
+
+

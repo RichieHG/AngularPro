@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "fitness-app-f2ba2"
+  },
+  "targets": {
+    "fitness-app-f2ba2": {
+      "hosting": {
+        "final-project-angular-pro": [
+          "fitness-app-f2ba2"
+        ]
+      }
+    }
   }
 }
