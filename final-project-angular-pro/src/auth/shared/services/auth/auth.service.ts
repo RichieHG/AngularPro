@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { tap } from 'rxjs';
+import { map, tap } from 'rxjs';
 import { Store } from 'src/store';
 
 export interface User {
@@ -11,6 +11,17 @@ export interface User {
 
 @Injectable()
 export class AuthService {
+
+  private _user?: firebase.default.User | null;
+
+
+  get user(){
+    return this._user!;
+   }
+
+  set user(value: firebase.default.User){
+    this._user = value;
+  }
 
   auth$ = this.af.authState.pipe(
     tap((next: any) => {
@@ -29,7 +40,9 @@ export class AuthService {
   constructor(
     private af: AngularFireAuth,
     private store: Store
-  ) { }
+  ) {
+    this.getUser();
+   }
 
   createUser(email: string, password: string){
     return this.af.createUserWithEmailAndPassword(email,password);
@@ -46,4 +59,13 @@ export class AuthService {
   get authState(){
     return this.af.authState;
   }
+
+   getUser(){
+    this.af.user.subscribe((user) =>{
+      this._user = user;
+    });
+  }
+
+
+
 }

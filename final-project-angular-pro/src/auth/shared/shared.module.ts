@@ -17,10 +17,7 @@ import { AuthService } from './services/auth/auth.service';
   ],
   declarations: [
     AuthFormComponent
-  ],
-  providers: [
-
-  ],
+  ]
 })
 export class SharedModule {
   static forRoot(): ModuleWithProviders<SharedModule> {

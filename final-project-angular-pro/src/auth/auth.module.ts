@@ -43,7 +43,6 @@ export const firebaseConfig: FirebaseOptions = {
 
 @NgModule({
   imports: [
-    CommonModule,
     RouterModule.forChild(ROUTES),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
