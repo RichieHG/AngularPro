@@ -8,7 +8,13 @@ import { AppHeaderComponent } from './components/app-header/app-header.component
 import { AppNavComponent } from './components/app-nav/app-nav.component';
 import { AppComponent } from './containers/app/app.component';
 
-export const ROUTES: Route[] = [];
+export const ROUTES: Route[] = [
+  {
+    path:'',
+    pathMatch: 'full',
+    redirectTo: 'schedule'
+  }
+];
 @NgModule({
   declarations: [
     AppComponent,
