@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from "@angular/core";
-import { AngularFireDatabase } from "@angular/fire/compat/database";
+import { AngularFireDatabase, SnapshotAction } from "@angular/fire/compat/database";
 import { map, Observable, Subject, switchMap, tap} from "rxjs";
 import { AuthService } from "src/auth/shared/services/auth/auth.service";
 import { Store } from "src/store";
@@ -15,10 +15,18 @@ export interface Meal {
 @Injectable()
 export class MealsService {
 
-    private user$?: Subject<firebase.default.User>;
-    meals$?: Observable<Meal[]> =this.db.list<Meal>(`meals/${this.uid}`).valueChanges()
+    meals$?: Observable<Meal[]> =this.db.list<Meal>(`meals/${this.uid}`).snapshotChanges()
     .pipe(
-        tap((next:Meal[]) => this.store.set('meals', next))
+        map(rawItems => {
+            return rawItems.map( p => {
+                return {
+                    ...p.payload.val(), $key: p.key, $exists: p.payload.exists
+                } as Meal
+            })
+        }),
+        tap((next:Meal[]) => {
+            this.store.set('meals', next);
+        }),
     );
 
     constructor(
@@ -37,4 +45,7 @@ export class MealsService {
         return this.db.list(`meals/${this.uid}`).push(meal);
     }
 
+    removeMeal(key: string){
+        return this.db.list(`meals/${this.uid}`).remove(key);
+    }
 }

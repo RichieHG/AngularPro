@@ -1,12 +1,36 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Meal } from '../../services/meals.service';
 
 @Component({
     selector: 'list-item',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ['list-item.component.scss'],
     template: `
     <div class="list-item">
-        {{item | json}}
+        <a [routerLink]="getRoute(item!)">
+            <p class="list-item__name">
+                {{item?.name}}
+            </p>
+            <p class="list-item__ingredients">
+                <span>
+                    {{item?.ingredients}}
+                </span>
+            </p>
+        </a>
+        <div class="list-item__delete" *ngIf="toggled">
+            <p>
+                Delete item?
+            </p>
+            <button class="confirm" type="button" (click)="removeItem()">
+                Yes
+            </button>
+            <button class="cancel" type="button" (click)="toggle()">
+                No
+            </button>
+        </div>
+        <button class="trash" type="button" (click)="toggle()">
+            <img src="/assets/img/remove.svg">
+        </button>
     </div>
     `
 })
@@ -14,6 +38,23 @@ import { Meal } from '../../services/meals.service';
 export class ListItemComponent {
     @Input()
     item?: Meal;
+
+    @Output()
+    remove: EventEmitter<Meal> = new EventEmitter<Meal>();
+
+    toggled: boolean = false;
     constructor() { }
+
+    getRoute(item: any){
+        return [`../meals`, item.$key];
+    }
+
+    removeItem(){
+        this.remove.emit(this.item);
+    }
+
+    toggle(){
+        this.toggled = !this.toggled;
+    }
 
 }

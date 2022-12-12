@@ -16,6 +16,10 @@ export const ROUTES: Route[] = [
     {
         path: 'new',
         component: MealComponent
+    },
+    {
+        path: ':id',
+        component: MealComponent
     }
 ]
 
