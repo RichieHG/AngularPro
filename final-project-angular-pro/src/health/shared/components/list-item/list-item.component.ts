@@ -13,9 +13,14 @@ import { Workout } from '../../services/workouts.service';
                 {{item?.name}}
             </p>
             <p class="list-item__ingredients">
-                <span>
-                    {{item?.ingredients}}
+                <span *ngIf="item?.ingredients; else showWorkout">
+                    {{item?.ingredients | join}}
                 </span>
+                <ng-template #showWorkout>
+                <span>
+                    {{item | workout}}
+                </span>
+                </ng-template>
             </p>
         </a>
         <div class="list-item__delete" *ngIf="toggled">
@@ -47,7 +52,10 @@ export class ListItemComponent {
     constructor() { }
 
     getRoute(item: any){
-        return [`../meals`, item.$key];
+        return [
+            `../${item?.ingredients ? 'meals' : 'workouts'}`,
+            item.$key
+        ];
     }
 
     removeItem(){
