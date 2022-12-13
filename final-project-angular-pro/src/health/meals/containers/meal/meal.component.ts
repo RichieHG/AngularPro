@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription, switchMap } from 'rxjs';
-import { Meal, MealsService } from 'src/health/shared/services/meals.service';
+import { Meal, MealsService } from 'src/health/shared/services/meals/meals.service';
 
 @Component({
     selector: 'meal',

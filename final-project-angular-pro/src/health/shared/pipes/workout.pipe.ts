@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Workout } from '../services/workouts.service';
+import { Workout } from '../services/workouts/workouts.service';
 
 @Pipe({
     name: 'workout'

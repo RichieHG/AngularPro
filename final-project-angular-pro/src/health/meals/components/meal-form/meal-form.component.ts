@@ -14,7 +14,7 @@ import {
     FormGroup,
     Validators,
 } from '@angular/forms';
-import { Meal } from 'src/health/shared/services/meals.service';
+import { Meal } from 'src/health/shared/services/meals/meals.service';
 
 @Component({
     selector: 'meal-form',

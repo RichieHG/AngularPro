@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Meal } from '../../services/meals.service';
-import { Workout } from '../../services/workouts.service';
+import { Meal } from '../../services/meals/meals.service';
+import { Workout } from '../../services/workouts/workouts.service';
 
 @Component({
     selector: 'list-item',

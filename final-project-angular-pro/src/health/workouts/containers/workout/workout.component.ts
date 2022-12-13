@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription, switchMap } from 'rxjs';
-import { Workout, WorkoutsService } from 'src/health/shared/services/workouts.service';
+import { Workout, WorkoutsService } from 'src/health/shared/services/workouts/workouts.service';
 
 @Component({
     selector: 'workout',

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, FormControl, FormArray } from '@angular/forms';
-import { Workout } from 'src/health/shared/services/workouts.service';
+import { Workout } from 'src/health/shared/services/workouts/workouts.service';
 
 @Component({
     selector: 'workout-form',
