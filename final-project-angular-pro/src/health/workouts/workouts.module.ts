@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { Route, RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { WorkoutFormComponent } from './components/workout-form/workout-form.component';
+import { WorkoutTypeComponent } from './components/workout-type/workout-type.component';
 import { WorkoutComponent } from './containers/workout/workout.component';
 import { WorkoutsComponent } from './containers/workouts/workouts.component';
 
@@ -35,7 +36,8 @@ export const ROUTES: Route[] = [
     declarations: [
         WorkoutsComponent,
         WorkoutComponent,
-        WorkoutFormComponent
+        WorkoutFormComponent,
+        WorkoutTypeComponent
     ],
     providers: [],
 })
