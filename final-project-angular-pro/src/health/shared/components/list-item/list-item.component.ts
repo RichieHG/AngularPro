@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Meal } from '../../services/meals.service';
+import { Workout } from '../../services/workouts.service';
 
 @Component({
     selector: 'list-item',
@@ -37,10 +38,10 @@ import { Meal } from '../../services/meals.service';
 
 export class ListItemComponent {
     @Input()
-    item?: Meal;
+    item?: any;
 
     @Output()
-    remove: EventEmitter<Meal> = new EventEmitter<Meal>();
+    remove: EventEmitter<any> = new EventEmitter<any>();
 
     toggled: boolean = false;
     constructor() { }
