@@ -1,6 +1,7 @@
 import { BehaviorSubject, distinctUntilChanged, map, Observable } from "rxjs";
 import { User } from "src/auth/shared/services/auth/auth.service";
 import { Meal } from "./health/shared/services/meals/meals.service";
+import { ScheduleItem } from "./health/shared/services/schedule/schedule.service";
 import { Workout } from "./health/shared/services/workouts/workouts.service";
 
 export interface State {
@@ -8,6 +9,9 @@ export interface State {
   meals?: Meal[] | null,
   date?: Date,
   workouts?: Workout[] | null,
+  schedule?: ScheduleItem[] | null,
+  selected?: any,
+  list?: any,
   [key: string]: any
 }
 
@@ -15,7 +19,10 @@ const state: State = {
   user: undefined,
   meals: undefined,
   date: undefined,
-  workouts: undefined
+  workouts: undefined,
+  schedule: undefined,
+  selected: undefined,
+  list: undefined
 };
 
 export class Store {

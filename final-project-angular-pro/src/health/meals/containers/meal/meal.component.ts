@@ -62,7 +62,7 @@ export class MealComponent implements OnInit, OnDestroy  {
     }
 
     ngOnInit() {
-        this.subscription = this.mealService.meals$?.subscribe();
+        this.subscription = this.mealService.meals$.subscribe();
         this.meal$ = this.route.params.pipe(
             switchMap(param => {
                 return this.mealService.getMeal(param['id']);

@@ -15,10 +15,10 @@ export interface Meal {
 @Injectable()
 export class MealsService {
 
-    meals$?: Observable<Meal[]> =this.db.list<Meal>(`meals/${this.uid}`).snapshotChanges()
+    meals$: Observable<Meal[]> =this.db.list<Meal>(`meals/${this.uid}`).snapshotChanges()
     .pipe(
-        map(rawItems => {
-            return rawItems.map( p => {
+        map(rawData => {
+            return rawData.map( p => {
                 return {
                     ...p.payload.val(), $key: p.key, $exists: p.payload.exists
                 } as Meal

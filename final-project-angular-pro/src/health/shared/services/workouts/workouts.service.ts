@@ -17,7 +17,7 @@ export interface Workout {
 @Injectable()
 export class WorkoutsService {
 
-    workouts$?: Observable<Workout[]> =this.db.list<Workout>(`workouts/${this.uid}`).snapshotChanges()
+    workouts$: Observable<Workout[]> =this.db.list<Workout>(`workouts/${this.uid}`).snapshotChanges()
     .pipe(
         map(rawItems => {
             return rawItems.map( p => {
